@@ -59,6 +59,14 @@ textarea {
 #suscribeForm{
   float:right; width:50%; height: 100%;
 }
+#mapvisualisation{
+  float:left; width:60%; height: 100%;
+
+}
+#dataForms{
+  float:right; width:40%; height: 100%;
+}
+
       #map {
         width: 100%;
         height: 60%;

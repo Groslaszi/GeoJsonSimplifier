@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
     <title>GeoJsonSimplifier</title>
     <script type="text/javascript" src="/js/base.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
     <meta name="google-signin-client_id" content="953688397017-0g48nvidk9cp82lalumhbigorpacq7ke.apps.googleusercontent.com">
-    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
-    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
+     <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<!--     <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css"> -->
     <link type="text/css" rel="stylesheet" href="/css/style.css">
 </head>
 <body style="min-height: 100%;" onbeforeunload="return signOut()">
@@ -23,7 +25,7 @@
 
 
 
- <div class="container" style="height: 100%; padding-top: 20px;"  >
+ <div class="container" style="height: 100%; padding-top: 40px;"  >
 
 
         <div style="width:100%; height: 100%;">
@@ -31,11 +33,15 @@
               <h4 id="userNameWelcome">Here are your datassets</h4>
 
 
- <div id= "textExplanations" >
- <div id="map"></div>
+ <div id= "mapvisualisation" >
+ <div id="map" style="height:100%;"></div>
 </div> ​
- <div><p></p> <input id="getGreeting" type="submit" class="btn btn-small" value="Log out" onclick="signOut();"></div>
-<div id= "suscribeForm" >
+
+
+<div id= "dataForms" >
+
+<div id="datalist" class="list-group"></div> ​
+
  <a href="index.html">Link</a>
 
         </div> ​
@@ -45,7 +51,7 @@
 
 
         <script type="text/javascript">
-window.alert(sessionStorage.userinfo);
+fetchDatasetsList();
 document.getElementById("userNameWelcome").innerHTML = "Here are your datasets "+sessionStorage.accountName+" :";
  var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 0,

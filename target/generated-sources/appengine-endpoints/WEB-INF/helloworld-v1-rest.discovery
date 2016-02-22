@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/lm-GONpGtr5ttQq4fR3HsdKtqHE\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/UFURCnF4TXRuXlJJuCqZZFXpn8M\"",
  "discoveryVersion": "v1",
  "id": "helloworld:v1",
  "name": "helloworld",
@@ -255,29 +255,16 @@
     },
     "listDataSets": {
      "id": "helloworld.greetings.listDataSets",
-     "path": "listDataSets/{group}/{zoom}/{username}",
+     "path": "listDataSets/{username}",
      "httpMethod": "GET",
      "parameters": {
-      "group": {
-       "type": "string",
-       "required": true,
-       "location": "path"
-      },
       "username": {
        "type": "string",
        "required": true,
        "location": "path"
-      },
-      "zoom": {
-       "type": "integer",
-       "required": true,
-       "format": "int32",
-       "location": "path"
       }
      },
      "parameterOrder": [
-      "group",
-      "zoom",
       "username"
      ],
      "response": {
