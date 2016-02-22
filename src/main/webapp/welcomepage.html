@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GeoJsonSimplifier</title>
+    <script type="text/javascript" src="/js/base.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <meta name="google-signin-client_id" content="953688397017-0g48nvidk9cp82lalumhbigorpacq7ke.apps.googleusercontent.com">
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
+    <link type="text/css" rel="stylesheet" href="/css/style.css">
+</head>
+<body style="min-height: 100%;">
+    <div class="navbar navbar-inverse navbar-fixed-top"style=" padding-bottom: 20px;">
+        <div class="navbar-inner">
+            <div class="container">
+                
+                <h3 style="color:white;">GeoJsonSimplifier</h3>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container" style="height: 100%; padding-top: 20px;"  >
+
+        <div style="width:100%; height: 100%;">
+
+ <div id= "textExplanations" >
+  <h3 >What is this?</h3>
+<p>This web application is a support tool developed to help developers store and manage their geogrpahical data.</p>
+<p>It allows you to freely store, simplify and retrive the most appropriate data as fast as possible.To do so it just reuires you to suscribe to the platform, upload your content and perform simple HTTP requests on it.</p>
+<p>The security measures and algorithms put together, will allow you to deliver the smoothest mapping experience to your customer.</p>
+</div> ​
+
+<div id= "suscribeForm" >
+
+ <form action="javascript:void(0);"style="width:100%;" >
+                    <h4>Suscribe</h4>
+                    <div style="height:100%;"><span class="label">Account Name: </span> <p></p> <input id="nameAccount" /></div>
+                    <div><span class="label">Password: </span><p></p><input id="passwordAccount" /></div>
+                    <div><p></p><div class="g-signin2" data-onsuccess="onSignIn"></div></div>
+                    <div><p></p> <input id="getGreeting" type="submit" class="btn btn-small" value="Log out" onclick="signOut();"></div>
+                 
+                    
+                </form>
+
+
+
+        <a href="profilePage.html">My link</a>
+
+        </div> ​
+
+ </div> ​
+</div>
+
+</body>
+</html>

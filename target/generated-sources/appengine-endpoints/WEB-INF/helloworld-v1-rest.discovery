@@ -1,0 +1,394 @@
+{
+ "kind": "discovery#restDescription",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/lm-GONpGtr5ttQq4fR3HsdKtqHE\"",
+ "discoveryVersion": "v1",
+ "id": "helloworld:v1",
+ "name": "helloworld",
+ "version": "v1",
+ "description": "This is an API",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "protocol": "rest",
+ "baseUrl": "https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/",
+ "basePath": "/_ah/api/helloworld/v1/",
+ "rootUrl": "https://geojsonsimplifier.appspot.com/_ah/api/",
+ "servicePath": "helloworld/v1/",
+ "batchPath": "batch",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/userinfo.email": {
+     "description": "View your email address"
+    }
+   }
+  }
+ },
+ "schemas": {
+  "Feature": {
+   "id": "Feature",
+   "type": "object",
+   "properties": {
+    "geometry": {
+     "$ref": "Geometry"
+    },
+    "properties": {
+     "$ref": "_any"
+    },
+    "type": {
+     "type": "string"
+    }
+   }
+  },
+  "FeatureCollection": {
+   "id": "FeatureCollection",
+   "type": "object",
+   "properties": {
+    "features": {
+     "type": "array",
+     "items": {
+      "$ref": "Feature"
+     }
+    },
+    "properties": {
+     "$ref": "JsonMap"
+    },
+    "type": {
+     "type": "string"
+    }
+   }
+  },
+  "Geometry": {
+   "id": "Geometry",
+   "type": "object",
+   "properties": {
+    "coordinates": {
+     "$ref": "_any"
+    },
+    "type": {
+     "type": "string"
+    }
+   }
+  },
+  "HelloGreeting": {
+   "id": "HelloGreeting",
+   "type": "object",
+   "properties": {
+    "message": {
+     "$ref": "_any"
+    }
+   }
+  },
+  "HelloGreetingCollection": {
+   "id": "HelloGreetingCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "HelloGreeting"
+     }
+    }
+   }
+  },
+  "JsonMap": {
+   "id": "JsonMap",
+   "type": "object"
+  },
+  "_any": {
+   "id": "_any",
+   "type": "any"
+  }
+ },
+ "methods": {
+  "getJsontestget": {
+   "id": "helloworld.getJsontestget",
+   "path": "featurecollection/{id}",
+   "httpMethod": "POST",
+   "parameters": {
+    "id": {
+     "type": "integer",
+     "required": true,
+     "format": "int32",
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "response": {
+    "$ref": "FeatureCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "list": {
+   "id": "helloworld.list",
+   "path": "list/{Group}/{Zoom}/{Screen}",
+   "httpMethod": "GET",
+   "parameters": {
+    "Group": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "Screen": {
+     "type": "integer",
+     "required": true,
+     "format": "int32",
+     "location": "path"
+    },
+    "Zoom": {
+     "type": "integer",
+     "required": true,
+     "format": "int32",
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "Group",
+    "Zoom",
+    "Screen"
+   ],
+   "response": {
+    "$ref": "FeatureCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  }
+ },
+ "resources": {
+  "greetings": {
+   "methods": {
+    "authed": {
+     "id": "helloworld.greetings.authed",
+     "path": "hellogreeting/authed",
+     "httpMethod": "POST",
+     "response": {
+      "$ref": "HelloGreeting"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "getGreeting": {
+     "id": "helloworld.greetings.getGreeting",
+     "path": "hellogreeting/{group}/{zoom}/{username}",
+     "httpMethod": "GET",
+     "parameters": {
+      "group": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      },
+      "username": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      },
+      "zoom": {
+       "type": "integer",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "group",
+      "zoom",
+      "username"
+     ],
+     "response": {
+      "$ref": "HelloGreeting"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "listDataSets": {
+     "id": "helloworld.greetings.listDataSets",
+     "path": "listDataSets/{group}/{zoom}/{username}",
+     "httpMethod": "GET",
+     "parameters": {
+      "group": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      },
+      "username": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      },
+      "zoom": {
+       "type": "integer",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "group",
+      "zoom",
+      "username"
+     ],
+     "response": {
+      "$ref": "HelloGreeting"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "listGreeting": {
+     "id": "helloworld.greetings.listGreeting",
+     "path": "hellogreeting",
+     "httpMethod": "GET",
+     "response": {
+      "$ref": "HelloGreetingCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "multiply": {
+     "id": "helloworld.greetings.multiply",
+     "path": "hellogreeting/{times}/{username}",
+     "httpMethod": "POST",
+     "parameters": {
+      "times": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      },
+      "username": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "times",
+      "username"
+     ],
+     "request": {
+      "$ref": "HelloGreeting",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "HelloGreeting"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "savesignin": {
+     "id": "helloworld.greetings.savesignin",
+     "path": "savesignin/{account}",
+     "httpMethod": "POST",
+     "parameters": {
+      "account": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "account"
+     ],
+     "response": {
+      "$ref": "HelloGreeting"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  },
+  "store": {
+   "methods": {
+    "geojson": {
+     "id": "helloworld.store.geojson",
+     "path": "storeGeoJson/{Geojson}/{Group}/{ID}",
+     "httpMethod": "POST",
+     "parameters": {
+      "Geojson": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      },
+      "Group": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      },
+      "ID": {
+       "type": "string",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "Geojson",
+      "Group",
+      "ID"
+     ],
+     "response": {
+      "$ref": "FeatureCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  }
+ }
+}

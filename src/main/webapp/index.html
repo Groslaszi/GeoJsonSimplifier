@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GeoJsonSimplifier</title>
+    <script type="text/javascript" src="/js/base.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
+    <link type="text/css" rel="stylesheet" href="/css/style.css">
+</head>
+<body style="min-height: 100%;">
+    <div class="navbar navbar-inverse navbar-fixed-top"style=" padding-bottom: 20px;">
+        <div class="navbar-inner">
+            <div class="container">
+                
+                <h3 style="color:white;">Configuration GeoJsonSimplifier</h3>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container" style="height: 100%; padding-top: 20px;"  >
+
+        <div style="width:100%; height: 100%;"> 
+            <div style="float:left; width:45%; height: 100%;" id="configurationGeo">
+
+
+                <form action="javascript:void(0);"style="width:100%; height: 100%;" >
+                    <h4>Insert GeoJson file</h4>
+                    <div style="height:100%;"><span class="label">Enter GeoJson: </span> <p></p> <textarea style="width: 80%; height:60%;" id="greeting" oninput="updateMap()">Copy GeoJson...</textarea></div>
+                    <div><span class="label">Group Namess: </span><p></p><input id="count" /></div>
+                    <div><p></p><input id="multiplyGreetings" type="submit" class="btn btn-small" value="Submit"></div>
+                    
+                </form>
+
+
+                <script type="text/javascript">
+                function init() {
+                    google.devrel.samples.hello.init('//' + window.location.host + '/_ah/api');
+                }
+                </script>
+                <script src="https://apis.google.com/js/client.js?onload=init"></script>
+
+            </div> 
+            <div style="float:right; width:55%; height: 100%;" class="displayGeo"><h4>Retrieve GeoJson</h4> <p></p><span class="label">Client map: </span><p></p><div id="map"></div>
+            <form action="javascript:void(0);">
+             <div><span class="label">Data to retrieve: </span><p></p> <input id="id" /></div>
+             <div><span class="label">Zoom level: </span><p></p> <input id="zoominput" /></div>
+             <div><p></p> <input id="getGreeting" type="submit" class="btn btn-small" value="Submit"></div>
+
+
+         </form>
+     </div> 
+ </div> ​
+</div>
+<div id="outputLog"></div>
+</body>
+</html>
