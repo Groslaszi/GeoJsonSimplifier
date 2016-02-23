@@ -113,6 +113,7 @@ public class Greetings {
 
    //Iterates through the Entities returned by the query to retrive each feature
    for (Entity result: pq.asIterable()) {
+    if(!datasetNames.contains(result.getProperty("grouptag").toString()))
     datasetNames.add(result.getProperty("grouptag").toString());
    }
   } catch (Exception e) {
@@ -453,31 +454,34 @@ public class Greetings {
 
  private int levelSimplification(int zoom, int screen) {
 
-  int levelToFetch = zoom * 100;
+  int levelToFetch = zoom ;
 
   switch (levelToFetch) {
-   case 100:
+    case 8:
+    levelToFetch = 0;
+    break;
+   case 7:
     levelToFetch = 1;
     break;
-   case 200:
+   case 6:
     levelToFetch = 2;
     break;
-   case 300:
+   case 5:
     levelToFetch = 3;
     break;
-   case 400:
+   case 4:
     levelToFetch = 4;
     break;
-   case 500:
+   case 3:
     levelToFetch = 5;
     break;
-   case 600:
+   case 2:
     levelToFetch = 6;
     break;
-   case 700:
+   case 1:
     levelToFetch = 7;
     break;
-   case 800:
+   case 0:
     levelToFetch = 8;
     break;
 

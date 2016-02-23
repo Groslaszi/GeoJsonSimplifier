@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8" /> 
     <title>GeoJsonSimplifier</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script type="text/javascript" src="/js/base.js"></script>
+
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
     
     <!--  <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
@@ -32,6 +34,9 @@
                 <form action="javascript:void(0);"style="width:100%; height: 100%;" >
                     <h4>Insert GeoJson file</h4>
                     <div style="height:100%;"><span class="label">Enter GeoJson: </span> <p></p> <textarea style="width: 80%; height:60%;" id="greeting" oninput="updateMap()">Copy GeoJson...</textarea></div>
+
+                    <div><p></p><input type="file" id="file_input"></div>
+                    <div id="progBar" style="background-color:black;width:1px;"> </div>
                     <div><span class="label">Group Namess: </span><p></p><input id="count" /></div>
                     <div><p></p><input id="multiplyGreetings" type="submit" class="btn btn-small" value="Submit"></div>
                     
