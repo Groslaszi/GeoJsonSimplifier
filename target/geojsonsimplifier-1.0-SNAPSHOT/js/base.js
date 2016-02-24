@@ -135,10 +135,10 @@ function updateMap() {
 
 google.devrel.samples.hello.enableButtons = function() {
 
-    document.getElementById('getGreeting').onclick = function() {
+   /* document.getElementById('getGreeting').onclick = function() {
         google.devrel.samples.hello.getGreeting(
             document.getElementById('id').value, document.getElementById('zoominput').value, sessionStorage.userinfo);
-    }
+    }*/
 
 
     document.getElementById('multiplyGreetings').onclick = function() {
@@ -199,9 +199,14 @@ element.appendChild(button);
 
 function clickFunc() {
 
+if(features!=null){
+  for (var i = 0; i < features.length; i++)
+              map.data.remove(features[i]);
+}
 
 if(this.id!="createNewDataSet"){
  var xmlhttp = new XMLHttpRequest();
+window.alert('https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/'+map.getZoom()+'/'+sessionStorage.userinfo);
 
     var url =  'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/'+map.getZoom()+'/'+sessionStorage.userinfo;
 
@@ -223,10 +228,6 @@ var datamap;
 var features=null;
 function dataDisplayonMap(myArr){
 window.alert('arrived data');
-if(features!=null){
-  for (var i = 0; i < features.length; i++)
-              map.data.remove(features[i]);
-}
 
 features = map.data.addGeoJson(myArr.message);
   //datamap=new google.maps.Data();

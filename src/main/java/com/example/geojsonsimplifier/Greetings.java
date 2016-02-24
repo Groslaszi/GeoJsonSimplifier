@@ -216,56 +216,23 @@ public class Greetings {
   String group = times;
   HelloGreeting response = new HelloGreeting();
 
-  FeatureCollection jsonString = new FeatureCollection();
-  Gson gson = new Gson();
-  jsonString.type = "Well stored in backend";
-  try {
 
-   //Datastore specification of the Entity to be saved
-   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-   jsonString = gson.fromJson(greeting.getMessage().toString(), FeatureCollection.class);
-   Key featureKey = KeyFactory.createKey("GeoJsonText", username);
-   System.out.println("Before loop");
-   //Iterates through each feature of the GeoJSON file seperating them between coordinates, type and metadata
-   for (int i = 0; i < jsonString.features.size(); i++) {
-    System.out.println("Not null ");
-    if (jsonString.features.get(i).geometry != null) {
+FeatureCollection jsonString = new FeatureCollection();
+jsonString.type="Well Passed Onto Task Queue";
+try {
 
-     //extracts all the information from each Feature: Metadata and vertices
-     String featureType = jsonString.features.get(i).geometry.type.toString();
-     String stringCoordinate = jsonString.features.get(i).geometry.coordinates.toString();
-     Text jsonText = new Text(stringCoordinate);
-     System.out.println("Before Entity");
-     //The Entity that will be saved to Datastore and it's properties 
-     Entity geoJsonEntity = new Entity("GeoJsonText", featureKey);
-     geoJsonEntity.setProperty("grouptag", group);
-     geoJsonEntity.setProperty("id", jsonString.features.get(i).toString());
-     geoJsonEntity.setProperty("geometryType", featureType);
-     System.out.println("Before vertices");
-     //The vertices are simplified 8 times and saved in seperated propertoes
-     for (int n = 0; n < 8; n++) {
-      System.out.println("Simplification number " + n);
-      geoJsonEntity.setProperty("geometryCoordinateSimplified" + n, simplifys(stringCoordinate, n, featureType));
+ MyTask myTask = new MyTask(group,username);
+ myTask.setGeoJson(greeting.getMessage().toString());
+ Thread.sleep(500);
+ Queue myQueue = QueueFactory.getDefaultQueue();
+ myQueue.add(TaskOptions.Builder.withPayload(myTask));
+ }catch (Exception e) {
+ jsonString.type="Errror" + e;
 
-     }
-     System.out.println("After vertices");
-     geoJsonEntity.setProperty("properties", jsonString.features.get(i).properties.toString());
-     datastore.put(geoJsonEntity);
-     System.out.println("Stored");
-    }
-   }
-  } catch (Exception e) {
+ 
+}
 
-   StackTraceElement[] stackTrace = e.getStackTrace();
-   String fullClassName = stackTrace[stackTrace.length - 1].getClassName();
-   String className = fullClassName.substring(fullClassName
-    .lastIndexOf(".") + 1);
-   String methodName = stackTrace[stackTrace.length - 1].getMethodName();
-   int lineNumber = stackTrace[stackTrace.length - 1].getLineNumber();
-   System.out.println("Error " + e.toString() + " lineNumber --> " + fullClassName + "--" + className + "--" + methodName + "--" + lineNumber);
-   jsonString.type = "Error" + e;
 
-  }
   response.setMessage("This is a random test lalala" + jsonString.type);
   return response;
  }
