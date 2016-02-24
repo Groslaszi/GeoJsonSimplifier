@@ -46,10 +46,7 @@ google.devrel.samples.hello.userAuthed = function() {
 
 
 google.devrel.samples.hello.print = function(greeting) {
-    var element = document.createElement('div');
-    element.classList.add('row');
-    element.innerHTML = greeting.message;
-    document.getElementById('outputLog').appendChild(element);
+    
 };
 
 
@@ -170,7 +167,7 @@ function myFunction(arr) {
     var listdata = arr.message;
     var element = document.getElementById("datalist");
     if (listdata == 'nothing') {
-        window.alert('NOTHING');
+        
     } else {
         
 for (i = 0; i < listdata.length; i++) { 
@@ -304,10 +301,10 @@ function readFile(file) {
 google.devrel.samples.hello.init = function(apiRoot) {
 
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 0,
+        zoom: 2,
         center: {
-            lat: 0,
-            lng: 0
+            lat: 43,
+            lng: 1
         }
     });
 

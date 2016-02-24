@@ -83,6 +83,8 @@ try {
     System.out.println("Not null ");
     if (jsonString.features.get(i).geometry != null) {
 
+    	if(!jsonString.features.get(i).properties.toString().contains("Antarctica")){
+
      //extracts all the information from each Feature: Metadata and vertices
      String featureType = jsonString.features.get(i).geometry.type.toString();
      String stringCoordinate = jsonString.features.get(i).geometry.coordinates.toString();
@@ -105,6 +107,7 @@ try {
      datastore.put(geoJsonEntity);
      System.out.println("Stored");
     }
+}
    }
   }
  catch (Exception e) {

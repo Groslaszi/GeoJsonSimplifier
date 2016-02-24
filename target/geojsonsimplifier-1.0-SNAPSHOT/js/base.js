@@ -304,10 +304,10 @@ function readFile(file) {
 google.devrel.samples.hello.init = function(apiRoot) {
 
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 0,
+        zoom: 2,
         center: {
-            lat: 0,
-            lng: 0
+            lat: 43,
+            lng: 1
         }
     });
 
