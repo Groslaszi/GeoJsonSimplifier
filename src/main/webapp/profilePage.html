@@ -17,7 +17,7 @@
         <div class="navbar-inner">
             <div class="container">
                 
-                <h3 style="color:white;">Profiles Page</h3>
+                <h3 style="color:white;">Profile Page</h3>
             </div>
         </div>
     </div>
@@ -30,15 +30,17 @@
 
         <div style="width:100%; height: 100%;">
 
-              <h4 id="userNameWelcome">Here are your datassets</h4>
+              <h4 id="userNameWelcome">Here are your datasets</h4>
 
-
+<p id="urldataset"></p>
  <div id= "mapvisualisation" >
  <div id="map" style="height:100%;"></div>
 </div> ​
 
 
 <div id= "dataForms" >
+       <img id="img-spinner" src="ajax-loader.gif" />
+
 
 <div id="datalist" class="list-group"></div> ​
 
@@ -49,6 +51,7 @@
 
 
         <script type="text/javascript">
+
 fetchDatasetsList();
 document.getElementById("userNameWelcome").innerHTML = "Here are your datasets "+sessionStorage.accountName+" :";
  var map = new google.maps.Map(document.getElementById('map'), {
@@ -56,6 +59,26 @@ document.getElementById("userNameWelcome").innerHTML = "Here are your datasets "
     center: {lat: 43, lng: 1}
   });
 
+google.maps.event.addListener(map,'zoom_changed',function () {
+    if(features!=null){
+  for (var i = 0; i < features.length; i++)
+              map.data.remove(features[i]);
+}
+   var xmlhttp = new XMLHttpRequest();
+window.alert('https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+clickedDataset+'/'+map.getZoom()+'/'+sessionStorage.userinfo);
+
+    var url =  'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+clickedDataset+'/'+map.getZoom()+'/'+sessionStorage.userinfo;
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var myArr = JSON.parse(xmlhttp.responseText);
+            dataDisplayonMap(myArr);
+        }
+    };
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+});
 
  function httpGet(theUrl)
 {

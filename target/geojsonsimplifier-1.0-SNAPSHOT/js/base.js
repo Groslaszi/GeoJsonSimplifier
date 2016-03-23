@@ -46,10 +46,7 @@ google.devrel.samples.hello.userAuthed = function() {
 
 
 google.devrel.samples.hello.print = function(greeting) {
-    var element = document.createElement('div');
-    element.classList.add('row');
-    element.innerHTML = greeting.message;
-    document.getElementById('outputLog').appendChild(element);
+    
 };
 
 
@@ -148,6 +145,9 @@ if(geojsontoUpload==null){
         google.devrel.samples.hello.multiplyGreeting(
             geojsontoUpload,
             document.getElementById('count').value, sessionStorage.userinfo);
+        sessionStorage.datauploadedname= document.getElementById('count').value;
+        window.alert('loading new page');
+         window.location = "tutorialpage.html";
     }
 
 
@@ -170,7 +170,7 @@ function myFunction(arr) {
     var listdata = arr.message;
     var element = document.getElementById("datalist");
     if (listdata == 'nothing') {
-        window.alert('NOTHING');
+        
     } else {
         
 for (i = 0; i < listdata.length; i++) { 
@@ -195,7 +195,11 @@ var button = document.createElement("button");
 
 element.appendChild(button);
 
+document.getElementById("img-spinner").style.display = "none";
+
 }
+
+var clickedDataset=null;
 
 function clickFunc() {
 
@@ -205,6 +209,8 @@ if(features!=null){
 }
 
 if(this.id!="createNewDataSet"){
+    document.getElementById("urldataset").innerHTML = 'The corresponding URL is: https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/'+map.getZoom()+'/'+sessionStorage.userinfo;
+    clickedDataset=this.id;
  var xmlhttp = new XMLHttpRequest();
 window.alert('https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/'+map.getZoom()+'/'+sessionStorage.userinfo);
 
@@ -220,7 +226,8 @@ window.alert('https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellog
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
 }else{
-  window.location = "index.html";
+  //window.location = "index.html";
+  window.location = "tutorialpage.html";
 }
 }
 
@@ -310,6 +317,7 @@ google.devrel.samples.hello.init = function(apiRoot) {
             lng: 1
         }
     });
+
 
     var apisToLoad;
     var callback = function() {

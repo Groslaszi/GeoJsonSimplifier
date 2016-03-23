@@ -130,6 +130,8 @@ public class Greetings {
 
 
 
+
+
 /*
  *
  * GET GEOJSONS
@@ -174,7 +176,7 @@ public class Greetings {
     //Assembladge of the Geometries
     com.example.geojsonsimplifier.Geometry geom = new com.example.geojsonsimplifier.Geometry();
     geom.type = type;
-    geom.coordinates = vertices;
+    geom.coordinates = vertices; 
 
     Map < String, Object > propertiesGeometry = new HashMap < String, Object > ();
     propertiesGeometry.put("Property", result.getProperty("properties"));
@@ -227,7 +229,7 @@ try {
  Queue myQueue = QueueFactory.getDefaultQueue();
  myQueue.add(TaskOptions.Builder.withPayload(myTask));
  }catch (Exception e) {
- jsonString.type="Errror" + e;
+ jsonString.type="Error " + e;
 
  
 }
@@ -254,7 +256,6 @@ try {
    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
    jsonString = gson.fromJson(geojson, FeatureCollection.class);
    Key featureKey = KeyFactory.createKey("GeoJsonText", group);
-   System.out.println("Before loop");
    //Iterates through each feature of the GeoJSON file seperating them between coordinates, type and metadata
    for (int i = 0; i < jsonString.features.size(); i++) {
     System.out.println("Not null ");
