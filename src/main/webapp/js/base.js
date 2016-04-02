@@ -1,39 +1,35 @@
 /**
  * @fileoverview
- * Provides methods for the Hello Endpoints sample UI and interaction with the
- * Hello Endpoints API.
- *
- * @author danielholevoet@google.com (Dan Holevoet)
+ * Provides the javascripts method for most of GeoJsonSimplifier web interfaces
  */
-/** google global namespace for Google projects. */
-var google = google || {};
-var map;
 
-/** devrel namespace for Google Developer Relations projects. */
-google.devrel = google.devrel || {};
+ var google = google || {};
+ var map;
 
-/** samples namespace for DevRel sample code. */
-google.devrel.samples = google.devrel.samples || {};
+ google.devrel = google.devrel || {};
 
-/** hello namespace for this sample. */
-google.devrel.samples.hello = google.devrel.samples.hello || {};
+ /** samples namespace for DevRel sample code. */
+ google.devrel.samples = google.devrel.samples || {};
+
+ /** hello namespace for this sample. */
+ google.devrel.samples.hello = google.devrel.samples.hello || {};
 
 /**
  * Client ID of the application (from the APIs Console).
  * @type {string}
  */
-google.devrel.samples.hello.CLIENT_ID =
-    '953688397017-0g48nvidk9cp82lalumhbigorpacq7ke.apps.googleusercontent.com';
+ google.devrel.samples.hello.CLIENT_ID =
+ '953688397017-0g48nvidk9cp82lalumhbigorpacq7ke.apps.googleusercontent.com';
 
 /**
  * Scopes used by the application.
  * @type {string}
  */
-google.devrel.samples.hello.SCOPES =
-    'https://www.googleapis.com/auth/userinfo.email';
+ google.devrel.samples.hello.SCOPES =
+ 'https://www.googleapis.com/auth/userinfo.email';
 
 
-google.devrel.samples.hello.userAuthed = function() {
+ google.devrel.samples.hello.userAuthed = function() {
     var request = gapi.client.oauth2.userinfo.get().execute(function(resp) {
         if (!resp.code) {
 
@@ -43,130 +39,87 @@ google.devrel.samples.hello.userAuthed = function() {
 };
 
 
+//the variable that is used to update and keep track of the data displayed on a map
+var features=null;
 
-
-google.devrel.samples.hello.print = function(greeting) {
-    
-};
-
-
+//the method fetches the appropriate level of abstraction for a GeoJSON object of a given dataset
 google.devrel.samples.hello.getGreeting = function(id, zoominput, username) {
-    gapi.client.helloworld.greetings.getGreeting({
-        'group': id,
-        'zoom': zoominput,
-        'username': username
-    }).execute(
-        function(resp) {
-            if (!resp.code) {
-                var datatoload = resp.message;
-                map.data.addGeoJson(datatoload);
 
-                google.devrel.samples.hello.print(resp);
-            }
-        });
+//the API method and it's parameters
+gapi.client.helloworld.greetings.getGreeting({
+    'group': id,
+    'zoom': zoominput,
+    'username': username,
+    'size':+window.innerWidth
+
+}).execute(
+    //the responses of the method
+    function(resp) {
+        if (!resp.code) {
+//the GeoJson Object is retrieve from the response
+var datatoload = resp.message;
+map.data.addGeoJson(datatoload);
+}
+});
 };
 
+//the method inserts a given GeoJson Object to the backend
 google.devrel.samples.hello.multiplyGreeting = function(
     greeting, times, username) {
+
+    //the loading animations gets activated and the submit button disapears 
     document.getElementById("multiplyGreetings").style.display = "none";
-        document.getElementById("img-spinner").style.display = "block";
+    document.getElementById("img-spinner").style.display = "block";
+
+    //the insert method API is called
     gapi.client.helloworld.greetings.multiply({
         'message': greeting,
         'times': times,
         'username': username
+
     }).execute(function(resp) {
         if (!resp.code) {
-            window.alert(JSON.stringify(resp));
-            google.devrel.samples.hello.print(resp);
+            //the dataset has been properly inserted and the tutorial page will be loaded
             window.location = "tutorialpage.html";
         }
     });
 };
 
-google.devrel.samples.hello.submitSubscruptions = function(
-    nameAccount, passwordAccount) {
-    window.alert('ButtonClicked');
-};
 
+
+//this functions fecthes all the datasets that have been uploaded by a user and will be displayed on the profilePage
 function fetchDatasetsList() {
 
-    var xmlhttp = new XMLHttpRequest();
-    var url = "https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/listDataSets/" + sessionStorage.userinfo;
+//the GET request to be performed
+var xmlhttp = new XMLHttpRequest();
+var url = "https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/listDataSets/" + sessionStorage.userinfo;
 
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            var myArr = JSON.parse(xmlhttp.responseText);
-            myFunction(myArr);
-        }
-    };
+//the method that will be called when the response from the backend arrives
+xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send();
-
+//extracts the data list from the HTTP response
+var responseDataList = JSON.parse(xmlhttp.responseText);
+displayDatasetList(responseDataList);
 }
-
-
-function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    var userInfo = '' + profile.getId();
-    sessionStorage.userinfo = userInfo;
-    sessionStorage.accountName = profile.getName();
-    window.location = "profilePage.html";
-
-}
-
-function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function() {
-        console.log('User signed out.');
-    });
-}
-
-function updateMap() {
-    var mapdataupdate = JSON.parse(document.getElementById('greeting').value);
-    map.data.addGeoJson(mapdataupdate);
-}
-
-
-google.devrel.samples.hello.enableButtons = function() {
-
-    document.getElementById('multiplyGreetings').onclick = function() {
-if(geojsontoUpload==null){
-  geojsontoUpload=document.getElementById('greeting').value;
-}
-
-        google.devrel.samples.hello.multiplyGreeting(
-            geojsontoUpload,
-            document.getElementById('count').value, sessionStorage.userinfo);
-
-        sessionStorage.datauploadedname= document.getElementById('count').value;
-        
-         
-    }
-
-
 };
 
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
 
-function httpGet(theUrl) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", theUrl, false);
-    xmlHttp.send(null);
-    window.alert('FirstONe' + xmlHttp.responseText.message);
-    var datatoload = xmlHttp.responseText.message;
-    var georesponse = JSON.parse(xmlHttp.responseText);
-    window.alert(JSON.stringify(georesponse.message));
-    return georesponse;
 }
 
+//displays in a button list the dataset names that have been uploaded by a user
+function displayDatasetList(arr) {
 
-function myFunction(arr) {
+
     var listdata = arr.message;
     var element = document.getElementById("datalist");
     if (listdata == 'nothing') {
-        
+
     } else {
-        
+
+//for every data name present in the list create a new button assign an Id and an event listener
 for (i = 0; i < listdata.length; i++) { 
 
     var button = document.createElement("button");
@@ -174,103 +127,158 @@ for (i = 0; i < listdata.length; i++) {
     button.id = listdata[i];
     button.innerHTML = listdata[i];
     button.className = "list-group-item";
-    button.addEventListener('click', clickFunc);
+    button.addEventListener('click',datasetSelected);
 
+//appends the newly created button to the datalist HTML element
 element.appendChild(button);
 }
-    }
+}
 
+//the last element to be created and appended is the "create new dataset" one
 var button = document.createElement("button");
-    button.type = "button";
-    button.id = "createNewDataSet";
-    button.innerHTML = "Create a new dataset";
-    button.className = "list-group-item";
-    button.addEventListener('click', clickFunc);
+button.type = "button";
+button.id = "createNewDataSet";
+button.innerHTML = "Create a new dataset";
+button.className = "list-group-item";
+button.addEventListener('click', datasetSelected);
 
 element.appendChild(button);
 
+//the elements have all been added the loading animation disapears
 document.getElementById("img-spinner").style.display = "none";
-
 }
 
+//keeps track of the latest dataset that has been selected
 var clickedDataset=null;
 
-function clickFunc() {
+//the function is called when an element of the profile list page has been selected
+function datasetSelected() {
 
+//removes the previous GeoJson stored on the map
 if(features!=null){
   for (var i = 0; i < features.length; i++)
-              map.data.remove(features[i]);
+      map.data.remove(features[i]);
 }
 
+//if the selcted element is not the one to create a new dataset
 if(this.id!="createNewDataSet"){
-    document.getElementById("urldataset").innerHTML = 'The corresponding URL is: https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/INSERT_ZOOM_LEVEL'+'/'+sessionStorage.userinfo;
-    clickedDataset=this.id;
- var xmlhttp = new XMLHttpRequest();
- document.getElementById("deleteButton").style.visibility = "visible";
-var url =  'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/'+map.getZoom()+'/'+sessionStorage.userinfo;
 
+    //displays the URL that the user has to insert in his personal application to retriev the selected dataset
+    document.getElementById("urldataset").innerHTML = 'The corresponding URL is: https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/INSERT_ZOOM_LEVEL'+'/'+sessionStorage.userinfo+'/INSERT_WINDOW_WIDTH';
+    //upadtes the element currently selected
+    clickedDataset=this.id;
+    var xmlhttp = new XMLHttpRequest();
+    //the delete button is made available
+    document.getElementById("deleteButton").style.visibility = "visible";
+
+    //the selected dataset is fetched from the backend and displayed on the map
+    var url =  'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/'+map.getZoom()+'/'+sessionStorage.userinfo+'/'+window.innerWidth;
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            var myArr = JSON.parse(xmlhttp.responseText);
-            dataDisplayonMap(myArr);
+            var geojsonresponse = JSON.parse(xmlhttp.responseText);
+            features = map.data.addGeoJson(geojsonresponse);
         }
     };
 
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
+
 }else{
+
+  // if the button clicked is to create a new dataset the application takes the user to the index page  
   window.location = "index.html";
 }
 }
 
-var datamap;
-var features=null;
-function dataDisplayonMap(myArr){
 
-features = map.data.addGeoJson(myArr.message);
+//the method that is executed when a user signs in GeoJsonSimplifier
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    //this variable contain the user information for the rest of his session on the application
+    var userInfo = '' + profile.getId();
+    sessionStorage.userinfo = userInfo;
+    sessionStorage.accountName = profile.getName();
+    //once the user signed in he is redirected to the profile page
+    window.location = "profilePage.html";
 
 }
 
+//signs out a user from his account
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function() {
+        console.log('User signed out.');
+    });
+}
 
+//the map in use is updated with the latest data that has arrived
+function updateMap() {
+    var mapdataupdate = JSON.parse(document.getElementById('greeting').value);
+    map.data.addGeoJson(mapdataupdate);
+}
+
+
+//initialises the submit button from the index page: 
+google.devrel.samples.hello.enableButtons = function() {
+
+//the method that is called once a user has uplaoded and submitted his dataset
+    document.getElementById('multiplyGreetings').onclick = function() {
+
+//the GeoJSON to be uplaoded either comes from a local file or has been pasted in the textarea
+        if(geojsontoUpload==null){
+          geojsontoUpload=document.getElementById('greeting').value;
+      }
+
+      google.devrel.samples.hello.multiplyGreeting(
+        geojsontoUpload,
+        document.getElementById('count').value, sessionStorage.userinfo);
+//the name of the dataset that has just been uplaoded is saved in the local sessionStorage 
+      sessionStorage.datauploadedname= document.getElementById('count').value;
+  }
+};
+
+//the method that executes the various http get requests
+function httpGet(theUrl) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", theUrl, false);
+    xmlHttp.send(null);
+    var datatoload = xmlHttp.responseText.message;
+    var georesponse = JSON.parse(xmlHttp.responseText);
+    window.alert(JSON.stringify(georesponse.message));
+    return georesponse;
+}
+
+
+
+//contains the geospatial data that will be uploaded to the backend
 var geojsontoUpload=null;
+
+//the gquery method that fetches the data contained in a local file
 $(document).ready(function() {
     $('#file_input').on('change', function(e) {
-
-        function updateProgress(evt) {
-            if (evt.lengthComputable) {
-                // evt.loaded and evt.total are ProgressEvent properties
-                var loaded = (evt.loaded / evt.total);
-                if (loaded < 1) {
-                    // Increase the prog bar length
-                    style.width = (loaded * 200) + "px";
-                }
-            }
-        }
 
         function loaded(evt) {
             // Obtain the read file data    
             var fileString = evt.target.result;
             // Handle UTF-16 file dump
-             map.data.addGeoJson(JSON.parse(fileString));
+            map.data.addGeoJson(JSON.parse(fileString));
             geojsontoUpload=fileString;
             
         }
+        //the method reads the text contained in a file
         var res = readFile(this.files[0]);
-
         var reader = new FileReader();
-
         reader.readAsText(this.files[0], "UTF-8");
-
-        reader.onprogress = updateProgress;
         reader.onload = loaded;
 
 
     });
 });
 
+//the method reads the content of a given file
 function readFile(file) {
     var reader = new FileReader(),
-        result = 'empty';
+    result = 'empty';
 
     reader.onload = function(e) {
         result = e.target.result;
@@ -283,17 +291,7 @@ function readFile(file) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+//this method initialises both the map and the API's used
 google.devrel.samples.hello.init = function(apiRoot) {
 
     map = new google.maps.Map(document.getElementById('map'), {
@@ -304,7 +302,6 @@ google.devrel.samples.hello.init = function(apiRoot) {
         }
     });
 
-
     var apisToLoad;
     var callback = function() {
         if (--apisToLoad == 0) {
@@ -313,7 +310,7 @@ google.devrel.samples.hello.init = function(apiRoot) {
         }
     }
 
-    apisToLoad = 1; // must match number of calls to gapi.client.load()
+    apisToLoad = 1; 
     gapi.client.load('helloworld', 'v1', callback, apiRoot);
 
 };

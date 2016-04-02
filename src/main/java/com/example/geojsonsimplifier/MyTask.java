@@ -52,12 +52,9 @@ import java.io.ObjectOutputStream;
 
 public class MyTask implements DeferredTask {
 
-
-
  public static volatile String gj;
  public String group; 
  public String username; 
-
 
  public MyTask(String group,String username) {
   this.gj=gj;
@@ -66,6 +63,7 @@ public class MyTask implements DeferredTask {
  
  }
  
+ // this method is called once the task has been passed on the Queue and his being processed
  @Override
  public void run() {
 

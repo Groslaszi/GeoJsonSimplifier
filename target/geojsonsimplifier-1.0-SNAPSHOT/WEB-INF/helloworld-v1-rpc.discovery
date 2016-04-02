@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/Ur9il2ZkV3JicZuE1gwAef1b2oo\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/ztjuIz49JsgFZxAaCzVaacN-aMU\"",
  "discoveryVersion": "v1",
  "id": "helloworld:v1",
  "name": "helloworld",
@@ -69,51 +69,6 @@
   }
  },
  "schemas": {
-  "Feature": {
-   "id": "Feature",
-   "type": "object",
-   "properties": {
-    "geometry": {
-     "$ref": "Geometry"
-    },
-    "properties": {
-     "$ref": "_any"
-    },
-    "type": {
-     "type": "string"
-    }
-   }
-  },
-  "FeatureCollection": {
-   "id": "FeatureCollection",
-   "type": "object",
-   "properties": {
-    "features": {
-     "type": "array",
-     "items": {
-      "$ref": "Feature"
-     }
-    },
-    "properties": {
-     "$ref": "JsonMap"
-    },
-    "type": {
-     "type": "string"
-    }
-   }
-  },
-  "Geometry": {
-   "id": "Geometry",
-   "type": "object",
-   "properties": {
-    "coordinates": {
-     "$ref": "_any"
-    },
-    "type": {
-     "type": "string"
-    }
-   }
-  },
   "HelloGreeting": {
    "id": "HelloGreeting",
    "type": "object",
@@ -123,47 +78,12 @@
     }
    }
   },
-  "HelloGreetingCollection": {
-   "id": "HelloGreetingCollection",
-   "type": "object",
-   "properties": {
-    "items": {
-     "type": "array",
-     "items": {
-      "$ref": "HelloGreeting"
-     }
-    }
-   }
-  },
-  "JsonMap": {
-   "id": "JsonMap",
-   "type": "object"
-  },
   "_any": {
    "id": "_any",
    "type": "any"
   }
  },
  "methods": {
-  "helloworld.getJsontestget": {
-   "id": "helloworld.getJsontestget",
-   "parameters": {
-    "id": {
-     "type": "integer",
-     "required": true,
-     "format": "int32"
-    }
-   },
-   "parameterOrder": [
-    "id"
-   ],
-   "returns": {
-    "$ref": "FeatureCollection"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
   "helloworld.greetings.authed": {
    "id": "helloworld.greetings.authed",
    "returns": {
@@ -181,6 +101,11 @@
      "type": "string",
      "required": true
     },
+    "size": {
+     "type": "integer",
+     "required": true,
+     "format": "int32"
+    },
     "username": {
      "type": "string",
      "required": true
@@ -194,7 +119,8 @@
    "parameterOrder": [
     "group",
     "zoom",
-    "username"
+    "username",
+    "size"
    ],
    "returns": {
     "$ref": "HelloGreeting"
@@ -217,16 +143,6 @@
    ],
    "returns": {
     "$ref": "HelloGreeting"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
-  "helloworld.greetings.listGreeting": {
-   "id": "helloworld.greetings.listGreeting",
-   "allowGet": true,
-   "returns": {
-    "$ref": "HelloGreetingCollection"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
@@ -259,24 +175,6 @@
     "https://www.googleapis.com/auth/userinfo.email"
    ]
   },
-  "helloworld.greetings.savesignin": {
-   "id": "helloworld.greetings.savesignin",
-   "parameters": {
-    "account": {
-     "type": "string",
-     "required": true
-    }
-   },
-   "parameterOrder": [
-    "account"
-   ],
-   "returns": {
-    "$ref": "HelloGreeting"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
   "helloworld.greetings.takeoutdataset": {
    "id": "helloworld.greetings.takeoutdataset",
    "parameters": {
@@ -295,66 +193,6 @@
    ],
    "returns": {
     "$ref": "HelloGreeting"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
-  "helloworld.list": {
-   "id": "helloworld.list",
-   "allowGet": true,
-   "parameters": {
-    "Group": {
-     "type": "string",
-     "required": true
-    },
-    "Screen": {
-     "type": "integer",
-     "required": true,
-     "format": "int32"
-    },
-    "Zoom": {
-     "type": "integer",
-     "required": true,
-     "format": "int32"
-    }
-   },
-   "parameterOrder": [
-    "Group",
-    "Zoom",
-    "Screen"
-   ],
-   "returns": {
-    "$ref": "FeatureCollection"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
-  "helloworld.store.geojson": {
-   "id": "helloworld.store.geojson",
-   "parameters": {
-    "Geojson": {
-     "type": "string",
-     "required": true
-    },
-    "Group": {
-     "type": "string",
-     "required": true
-    },
-    "ID": {
-     "type": "string",
-     "required": true,
-     "format": "int64"
-    }
-   },
-   "parameterOrder": [
-    "Geojson",
-    "Group",
-    "ID"
-   ],
-   "returns": {
-    "$ref": "FeatureCollection"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/Ur9il2ZkV3JicZuE1gwAef1b2oo\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/ztjuIz49JsgFZxAaCzVaacN-aMU\"",
  "discoveryVersion": "v1",
  "id": "helloworld:v1",
  "name": "helloworld",
@@ -71,51 +71,6 @@
   }
  },
  "schemas": {
-  "Feature": {
-   "id": "Feature",
-   "type": "object",
-   "properties": {
-    "geometry": {
-     "$ref": "Geometry"
-    },
-    "properties": {
-     "$ref": "_any"
-    },
-    "type": {
-     "type": "string"
-    }
-   }
-  },
-  "FeatureCollection": {
-   "id": "FeatureCollection",
-   "type": "object",
-   "properties": {
-    "features": {
-     "type": "array",
-     "items": {
-      "$ref": "Feature"
-     }
-    },
-    "properties": {
-     "$ref": "JsonMap"
-    },
-    "type": {
-     "type": "string"
-    }
-   }
-  },
-  "Geometry": {
-   "id": "Geometry",
-   "type": "object",
-   "properties": {
-    "coordinates": {
-     "$ref": "_any"
-    },
-    "type": {
-     "type": "string"
-    }
-   }
-  },
   "HelloGreeting": {
    "id": "HelloGreeting",
    "type": "object",
@@ -125,84 +80,9 @@
     }
    }
   },
-  "HelloGreetingCollection": {
-   "id": "HelloGreetingCollection",
-   "type": "object",
-   "properties": {
-    "items": {
-     "type": "array",
-     "items": {
-      "$ref": "HelloGreeting"
-     }
-    }
-   }
-  },
-  "JsonMap": {
-   "id": "JsonMap",
-   "type": "object"
-  },
   "_any": {
    "id": "_any",
    "type": "any"
-  }
- },
- "methods": {
-  "getJsontestget": {
-   "id": "helloworld.getJsontestget",
-   "path": "featurecollection/{id}",
-   "httpMethod": "POST",
-   "parameters": {
-    "id": {
-     "type": "integer",
-     "required": true,
-     "format": "int32",
-     "location": "path"
-    }
-   },
-   "parameterOrder": [
-    "id"
-   ],
-   "response": {
-    "$ref": "FeatureCollection"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
-  "list": {
-   "id": "helloworld.list",
-   "path": "list/{Group}/{Zoom}/{Screen}",
-   "httpMethod": "GET",
-   "parameters": {
-    "Group": {
-     "type": "string",
-     "required": true,
-     "location": "path"
-    },
-    "Screen": {
-     "type": "integer",
-     "required": true,
-     "format": "int32",
-     "location": "path"
-    },
-    "Zoom": {
-     "type": "integer",
-     "required": true,
-     "format": "int32",
-     "location": "path"
-    }
-   },
-   "parameterOrder": [
-    "Group",
-    "Zoom",
-    "Screen"
-   ],
-   "response": {
-    "$ref": "FeatureCollection"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
   }
  },
  "resources": {
@@ -221,12 +101,18 @@
     },
     "getGreeting": {
      "id": "helloworld.greetings.getGreeting",
-     "path": "hellogreeting/{group}/{zoom}/{username}",
+     "path": "hellogreeting/{group}/{zoom}/{username}/{size}",
      "httpMethod": "GET",
      "parameters": {
       "group": {
        "type": "string",
        "required": true,
+       "location": "path"
+      },
+      "size": {
+       "type": "integer",
+       "required": true,
+       "format": "int32",
        "location": "path"
       },
       "username": {
@@ -244,7 +130,8 @@
      "parameterOrder": [
       "group",
       "zoom",
-      "username"
+      "username",
+      "size"
      ],
      "response": {
       "$ref": "HelloGreeting"
@@ -269,17 +156,6 @@
      ],
      "response": {
       "$ref": "HelloGreeting"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/userinfo.email"
-     ]
-    },
-    "listGreeting": {
-     "id": "helloworld.greetings.listGreeting",
-     "path": "hellogreeting",
-     "httpMethod": "GET",
-     "response": {
-      "$ref": "HelloGreetingCollection"
      },
      "scopes": [
       "https://www.googleapis.com/auth/userinfo.email"
@@ -316,27 +192,6 @@
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
-    "savesignin": {
-     "id": "helloworld.greetings.savesignin",
-     "path": "savesignin/{account}",
-     "httpMethod": "POST",
-     "parameters": {
-      "account": {
-       "type": "string",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "account"
-     ],
-     "response": {
-      "$ref": "HelloGreeting"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/userinfo.email"
-     ]
-    },
     "takeoutdataset": {
      "id": "helloworld.greetings.takeoutdataset",
      "path": "takeoutdataset/{username}/{group}",
@@ -359,44 +214,6 @@
      ],
      "response": {
       "$ref": "HelloGreeting"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/userinfo.email"
-     ]
-    }
-   }
-  },
-  "store": {
-   "methods": {
-    "geojson": {
-     "id": "helloworld.store.geojson",
-     "path": "storeGeoJson/{Geojson}/{Group}/{ID}",
-     "httpMethod": "POST",
-     "parameters": {
-      "Geojson": {
-       "type": "string",
-       "required": true,
-       "location": "path"
-      },
-      "Group": {
-       "type": "string",
-       "required": true,
-       "location": "path"
-      },
-      "ID": {
-       "type": "string",
-       "required": true,
-       "format": "int64",
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "Geojson",
-      "Group",
-      "ID"
-     ],
-     "response": {
-      "$ref": "FeatureCollection"
      },
      "scopes": [
       "https://www.googleapis.com/auth/userinfo.email"

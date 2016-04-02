@@ -21,16 +21,95 @@
       </div>
       <div class="container" style="height: 100%; padding-top: 20px;"  >
          <div style="width:100%; height: 100%;">
-            <div id= "textExplanations" >
+            <div id= "textExplanation"style="width:100%;" >
                <h3 >Your data set has been safely uploaded!</h3>
                <p>The following HTTP GET request allows you to retrieve your data in a simplified format:</p>
                <p id ="urltocall"></p>
                <script type="text/javascript">
-                  document.getElementById("urltocall").innerHTML ="https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/"+sessionStorage.datauploadedname+"/MAP_ZOOM_LEVEL/"+ sessionStorage.userinfo;
+                  document.getElementById("urltocall").innerHTML ="https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/"+sessionStorage.datauploadedname+"/MAP_ZOOM_LEVEL/"+ sessionStorage.userinfo+'/INSERT_WINDOW_WIDTH';
                </script>
                <p></p>
                <p></p>
                The following piece of HTML code is an example of a simple application that contains a map that embeds GeoJsonSimplifer's services. 
+               <p></p>
+               <p></p>
+<div style="width:100%; margin-top:3%;"> 
+        <div style="float:left; display:inline-block; width:50%;" class="div1"><pre style="overflow:auto; background-color:#ffffff;"><xmp>
+
+<html>
+<head>
+  <title>Data Layer: Simple</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <style>
+  html, body, #map-canvas {
+
+   height: 100%;
+   width: 100%;
+   margin: 0px;
+   padding: 0px
+ }
+ </style>
+ <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+ <script>
+         //initialising global variables: the map and the features that will be displayed on it
+         var map;
+         var features=null;
+         
+         //first method that will be executed when window loads
+         function initialize() {
+
+         //map initialisation
+         map = new google.maps.Map(document.getElementById('map-canvas'), {
+           zoom: 0,
+           center: {lat: 0, lng: 0}
+         });
+         
+         //Each time a user changes the zoom level a different dataset gets fetched
+         google.maps.event.addListener(map,'zoom_changed',function () {
+
+             //delete previous features on the map
+             if(features!=null){
+              for (var i = 0; i < features.length; i++)
+                map.data.remove(features[i]);
+            }
+          //Preparation of the GET request that will be performed
+          var xmlhttp = new XMLHttpRequest();
+
+          //This is an example of a request that fecthes the relevant dataset 
+          var url =  'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/helloworld/'+map.getZoom()+'/103414959373291325491'+'/'+window.innerWidth;
+
+          //This method will be executed once a response has been received by the backend
+          xmlhttp.onreadystatechange = function() {
+
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+              //If the request was well executed geojsonResponse parses the response
+              var geojsonResponse = JSON.parse(xmlhttp.responseText);
+              //The GeoJSON object is retrieved , displayed on the map and the features variable is updated
+              features = map.data.addGeoJson(geojsonResponse.message);
+            }
+          };
+
+           //The HTTP request is executed
+           xmlhttp.open("GET", url, true);
+           xmlhttp.send();
+   });
+
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+</script>
+</head>
+<body>
+  <div id="map-canvas"></div>
+</body>
+</html>
+               </xmp></pre></div> 
+        <div style="float:right; display:inline-block; width:50%;" class="div2"><img src="mapexample.png" style="width:95%; height:auto; margin-left:5%;"></div> 
+    </div>
             </div>
             <div id= "suscribeForm" >
             </div>

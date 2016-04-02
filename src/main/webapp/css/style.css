@@ -54,10 +54,10 @@ textarea {
    text-align:center;  
 }
 #textExplanations{
-  float:left; width:50%; height: 100%;
+  float:left; width:50%; 
 }
 #suscribeForm{
-  float:right; width:50%; height: 100%;
+  float:right; width:50%; 
 }
 #mapvisualisation{
   float:left; width:60%; height: 100%;

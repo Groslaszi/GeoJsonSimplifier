@@ -1,120 +1,139 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-      <title>GeoJsonSimplifier</title>
-      <script type="text/javascript" src="/js/base.js"></script>
-      <script src="https://apis.google.com/js/platform.js" async defer></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-      <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-      <meta name="google-signin-client_id" content="953688397017-0g48nvidk9cp82lalumhbigorpacq7ke.apps.googleusercontent.com">
-      <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-      <!--     <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
-         <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css"> -->
+<head>
+  <meta charset="utf-8" />
+  <title>GeoJsonSimplifier</title>
+  <script type="text/javascript" src="/js/base.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+  <meta name="google-signin-client_id" content="953688397017-0g48nvidk9cp82lalumhbigorpacq7ke.apps.googleusercontent.com">
+  <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
       <link type="text/css" rel="stylesheet" href="/css/style.css">
-   </head>
-   <body style="min-height: 100%;" onbeforeunload="return signOut()">
+  </head>
+  <body style="min-height: 100%;" onbeforeunload="return signOut()">
       <div class="navbar navbar-inverse navbar-fixed-top"style=" padding-bottom: 20px;">
-         <div class="navbar-inner">
-            <div class="container">
-               <h3 style="color:white;">Profile Page</h3>
-            </div>
-         </div>
-      </div>
-      <div class="container" style="height: 100%; padding-top: 40px;"  >
-         <div style="width:100%; height: 100%;">
-            <h4 id="userNameWelcome">Here are your datasets</h4>
-            <div style="width:100%;height: 10%;">
-               <div style="float:left;">
-                  <p id="urldataset"></p>
-               </div>
-               <div style="float:right; height: 100%;">
-                  <img id ="deleteButton" onclick="sendDeleteRequest()" src="deleteImage.png" style="height:50%; width:auto;">
-               </div>
-            </div>
-            <div id= "mapvisualisation" >
-               <div id="map" style="height:100%;"></div>
-            </div>
-            <div id= "dataForms" >
-               <img id="img-spinner" src="ajax-loader.gif" />
-               <div id="datalist" class="list-group"></div>
-            </div>
-         </div>
-      </div>
-      <script type="text/javascript">
-         document.getElementById("deleteButton").style.visibility = "hidden";
-         
+       <div class="navbar-inner">
+        <div class="container">
+         <h3 style="color:white;">Profile Page</h3>
+     </div>
+ </div>
+</div>
+<div class="container" style="height: 100%; padding-top: 40px;"  >
+   <div style="width:100%; height: 100%;">
+    <h4 id="userNameWelcome">Here are your datasets</h4>
+    <div style="width:100%;height: 10%;">
+     <div style="float:left;">
+      <p id="urldataset"></p>
+  </div>
+  <div style="float:right; height: 100%;">
+      <img id ="deleteButton" onclick="sendDeleteRequest()" src="deleteImage.png" style="height:50%; width:auto;">
+  </div>
+</div>
+<div id= "mapvisualisation" >
+ <div id="map" style="height:100%;"></div>
+</div>
+<div id= "dataForms" >
+ <img id="img-spinner" src="ajax-loader.gif" />
+ <div id="datalist" class="list-group"></div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+
+//the user arrives on the profile page and is provided with a welcome message
+document.getElementById("userNameWelcome").innerHTML = "Here are your datasets "+sessionStorage.accountName+" :";
+
+//the map that displays his previously uploaded datasets is initialised
+    var map = new google.maps.Map(document.getElementById('map'), {
+       zoom: 2,
+       center: {lat: 43, lng: 1}
+   });
+    
+    //the event listerner fetches the most appropriate dataset when a user zooms on the map
+    google.maps.event.addListener(map,'zoom_changed',function () {
+
+        //removes the previous features from the map
+       if(features!=null){
+         for (var i = 0; i < features.length; i++)
+             map.data.remove(features[i]);
+     }
+
+     //the GET request that will be executed
+     var xmlhttp = new XMLHttpRequest();
+     var url =  'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+clickedDataset+'/'+map.getZoom()+'/'+sessionStorage.userinfo+'/'+window.innerWidth;
+     
+     xmlhttp.onreadystatechange = function() {
+       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+           var myArr = JSON.parse(xmlhttp.responseText);
+           dataDisplayonMap(myArr);
+       }
+   };
+   
+   xmlhttp.open("GET", url, true);
+   xmlhttp.send();
+});
+
+      //the delete button is hidden until a dataset is selected
+      document.getElementById("deleteButton").style.visibility = "hidden";
+         //fecthes the dataset to be displayed (see base.js)
          fetchDatasetsList();
          
+         //if the delete button is selected the method is excuted 
          function sendDeleteRequest(){
-             if(window.confirm('This will permantly delete your data. Do you want to continue?')){
-         
+
+//the user has to confirm his will to delete a given dataset
+if(window.confirm('This will permantly delete your data. Do you want to continue?')){
+
+         //the laoding animation is started
          document.getElementById("img-spinner").style.display = "block";
+         //the button to create a new dataset is disabled
          $('createNewDataSet').prop('disabled', true);
          document.getElementById("createNewDataSet").disabled = true;
-             var xmlhttp = new XMLHttpRequest();
+
+         //the request to delete a dataset is executed
+         var xmlhttp = new XMLHttpRequest();
+             //the selected dataset is deleted from the list
+             document.getElementById(clickedDataset).style.display = "none";
+
+             //the request to be executed
              var url = 'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/takeoutdataset/'+sessionStorage.userinfo+'/'+clickedDataset;
-         
+
              xmlhttp.onreadystatechange = function() {
-                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-         document.getElementById("img-spinner").style.display = "none";
-                     $('createNewDataSet').prop('disabled', false);
-         document.getElementById("createNewDataSet").disabled = false;
-                     window.alert(xmlhttp.responseText);
-         
-                     
-                 document.getElementById("createNewDataSet").disabled = false;
-                     var myArr = JSON.parse(xmlhttp.responseText);
-                     dataDisplayonMap(myArr);
-                 }
-             };
-         
-             xmlhttp.open("POST", url, true);
-             xmlhttp.send();
-         }
-         
-         
-         }
-         document.getElementById("userNameWelcome").innerHTML = "Here are your datasets "+sessionStorage.accountName+" :";
-         var map = new google.maps.Map(document.getElementById('map'), {
-             zoom: 2,
-             center: {lat: 43, lng: 1}
-         });
-         
-         google.maps.event.addListener(map,'zoom_changed',function () {
-             if(features!=null){
-               for (var i = 0; i < features.length; i++)
-                   map.data.remove(features[i]);
-           }
-           var xmlhttp = new XMLHttpRequest();
-           var url =  'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+clickedDataset+'/'+map.getZoom()+'/'+sessionStorage.userinfo;
-         
-           xmlhttp.onreadystatechange = function() {
-             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                 var myArr = JSON.parse(xmlhttp.responseText);
-                 dataDisplayonMap(myArr);
-             }
-         };
-         
-         xmlhttp.open("GET", url, true);
-         xmlhttp.send();
-         });
-         
-         function httpGet(theUrl)
-         {
-             var xmlHttp = new XMLHttpRequest();
-             xmlHttp.open( "GET", theUrl, false );
-             xmlHttp.send( null );
-         
-         window.alert('respon: '+xmlHttp.responseText.message);
-             if(xmlHttp.responseText.message.equals('well deleted')){
-                 document.getElementById("createNewDataSet").disabled = false;
-             }else{
-             var datatoload=xmlHttp.responseText.message;
-             var georesponse = JSON.parse(xmlHttp.responseText);
-             return georesponse;
-         }
-         }
-      </script>
-   </body>
+               if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                    //once the dataset deleted the loading animation stops and the user can create a new dataset
+                    document.getElementById("img-spinner").style.display = "none";
+                    $('createNewDataSet').prop('disabled', false);
+                    document.getElementById("createNewDataSet").disabled = false;
+                    window.alert('The dataset has been deleted');
+                    document.getElementById("createNewDataSet").disabled = false;
+                    var myArr = JSON.parse(xmlhttp.responseText);
+                    dataDisplayonMap(myArr);
+                }
+            };
+
+            xmlhttp.open("POST", url, true);
+            xmlhttp.send();
+        }
+
+    }
+
+    function httpGet(theUrl)
+    {
+       var xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "GET", theUrl, false );
+       xmlHttp.send( null );
+
+       window.alert('respon: '+xmlHttp.responseText.message);
+       if(xmlHttp.responseText.message.equals('well deleted')){
+           document.getElementById("createNewDataSet").disabled = false;
+       }else{
+           var datatoload=xmlHttp.responseText.message;
+           var georesponse = JSON.parse(xmlHttp.responseText);
+           return georesponse;
+       }
+   }
+   </script>
+</body>
 </html>
