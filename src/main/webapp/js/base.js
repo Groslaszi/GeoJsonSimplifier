@@ -68,13 +68,17 @@ google.devrel.samples.hello.getGreeting = function(id, zoominput, username) {
 
 google.devrel.samples.hello.multiplyGreeting = function(
     greeting, times, username) {
+    document.getElementById("multiplyGreetings").style.display = "none";
+        document.getElementById("img-spinner").style.display = "block";
     gapi.client.helloworld.greetings.multiply({
         'message': greeting,
         'times': times,
         'username': username
     }).execute(function(resp) {
         if (!resp.code) {
+            window.alert(JSON.stringify(resp));
             google.devrel.samples.hello.print(resp);
+            window.location = "tutorialpage.html";
         }
     });
 };
@@ -104,13 +108,7 @@ function fetchDatasetsList() {
 
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
-
-    console.log('ID: ' + profile.getId());
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail());
-
-    var userInfo = '' + profile.getId() + profile.getName() + profile.getEmail();
+    var userInfo = '' + profile.getId();
     sessionStorage.userinfo = userInfo;
     sessionStorage.accountName = profile.getName();
     window.location = "profilePage.html";
@@ -132,22 +130,18 @@ function updateMap() {
 
 google.devrel.samples.hello.enableButtons = function() {
 
-   /* document.getElementById('getGreeting').onclick = function() {
-        google.devrel.samples.hello.getGreeting(
-            document.getElementById('id').value, document.getElementById('zoominput').value, sessionStorage.userinfo);
-    }*/
-
-
     document.getElementById('multiplyGreetings').onclick = function() {
 if(geojsontoUpload==null){
   geojsontoUpload=document.getElementById('greeting').value;
 }
+
         google.devrel.samples.hello.multiplyGreeting(
             geojsontoUpload,
             document.getElementById('count').value, sessionStorage.userinfo);
+
         sessionStorage.datauploadedname= document.getElementById('count').value;
-        window.alert('loading new page');
-         window.location = "tutorialpage.html";
+        
+         
     }
 
 
@@ -212,9 +206,8 @@ if(this.id!="createNewDataSet"){
     document.getElementById("urldataset").innerHTML = 'The corresponding URL is: https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/INSERT_ZOOM_LEVEL'+'/'+sessionStorage.userinfo;
     clickedDataset=this.id;
  var xmlhttp = new XMLHttpRequest();
-window.alert('https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/'+map.getZoom()+'/'+sessionStorage.userinfo);
-
-    var url =  'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/'+map.getZoom()+'/'+sessionStorage.userinfo;
+ document.getElementById("deleteButton").style.visibility = "visible";
+var url =  'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/'+map.getZoom()+'/'+sessionStorage.userinfo;
 
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -226,22 +219,16 @@ window.alert('https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellog
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
 }else{
-  //window.location = "index.html";
-  window.location = "tutorialpage.html";
+  window.location = "index.html";
 }
 }
 
 var datamap;
 var features=null;
 function dataDisplayonMap(myArr){
-window.alert('arrived data');
 
 features = map.data.addGeoJson(myArr.message);
-  //datamap=new google.maps.Data();
-  //datamap.setMap(null);
-    //  datamap = new google.maps.Data();
-//datamap.addGeoJson(myArr.message);
-//datamap.setMap(map);  
+
 }
 
 
@@ -265,7 +252,6 @@ $(document).ready(function() {
             var fileString = evt.target.result;
             // Handle UTF-16 file dump
              map.data.addGeoJson(JSON.parse(fileString));
-            window.alert(fileString);
             geojsontoUpload=fileString;
             
         }

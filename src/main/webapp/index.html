@@ -1,76 +1,64 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" /> 
-    <title>GeoJsonSimplifier</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/base.js"></script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-    
-    <!--  <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
-     <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
-    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css"> 
-    <link type="text/css" rel="stylesheet" href="/css/style.css">
-</head>
-<body style="min-height: 100%;">
-    <div class="navbar navbar-inverse navbar-fixed-top"style=" padding-bottom: 20px;">
-        <div class="navbar-inner">
+   <head>
+      <meta charset="utf-8" />
+      <title>GeoJsonSimplifier</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+      <script type="text/javascript" src="/js/base.js"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+      <!--  <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
+      <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+      <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
+      <link type="text/css" rel="stylesheet" href="/css/style.css">
+   </head>
+   <body style="min-height: 100%;">
+      <div class="navbar navbar-inverse navbar-fixed-top"style=" padding-bottom: 20px;">
+         <div class="navbar-inner">
             <div class="container">
-                
-                <h3 style="color:white;">Configuration GeoJsonSimplifier</h3>
+               <h3 style="color:white;">Configuration GeoJsonSimplifier</h3>
             </div>
-        </div>
-    </div>
-
-
-
-    <div class="container" style="height: 100%; padding-top: 20px;"  >
-
-        <div style="width:100%; height: 100%;"> 
+         </div>
+      </div>
+      <div class="container" style="height: 100%; padding-top: 20px;"  >
+         <div style="width:100%; height: 100%;">
             <div style="float:left; width:75%; height: 100%;" id="configurationGeo">
-
-
-            
-
-
-  <h3>Retrieve GeoJson</h3> <p></p><span class="label">Client map: </span><p></p><div id="map" style="width:95%"></div>
-            <form action="javascript:void(0);">
-         </form>
-
-
-                <script type="text/javascript">
-                function init() {
-                    google.devrel.samples.hello.init('//' + window.location.host + '/_ah/api');
-                }
-                </script>
-                <script src="https://apis.google.com/js/client.js?onload=init"></script>
-
-            </div> 
+               <h3>Retrieve GeoJson</h3>
+               <p></p>
+               <span class="label">Client map: </span>
+               <p></p>
+               <div id="map" style="width:95%"></div>
+               <form action="javascript:void(0);">
+               </form>
+               <script type="text/javascript">
+                  function init() {
+                      google.devrel.samples.hello.init('//' + window.location.host + '/_ah/api');
+                  }
+               </script>
+               <script src="https://apis.google.com/js/client.js?onload=init"></script>
+            </div>
             <div style="float:right; width:25%; height: 100%;" class="displayGeo">
-
-              
-                 <form action="javascript:void(0);"style="width:100%; height: 100%;" >
-
-
-                    <h3>Insert GeoJson file</h3>
-                    <div style="height:60%;"><span class="label">Enter GeoJson: </span> <p></p> 
-
-
-                        <textarea style="width: 80%; height:100%;" id="greeting" oninput="updateMap()">Copy GeoJson...</textarea>
-
-                    </div>
-
-                    <div><p></p><input style="margin-top:10%" type="file" id="file_input"></div>
-                    <div id="progBar" style="background-color:black;width:1px;"> </div>
-                    <div><span class="label" style="margin-top:3%">Group Name: </span><p></p><input id="count" /></div>
-                    <div><input id="multiplyGreetings" style="margin-top:3%" type="submit" class="btn btn-small" value="Submit"></div>
-                    
-                </form>
-
-
-     </div> 
- </div> ​
-</div>
-</body>
+               <form action="javascript:void(0);"style="width:100%; height: 100%;" >
+                  <h3>Insert GeoJson file</h3>
+                  <div style="height:60%;">
+                     <span class="label">Enter GeoJson: </span> 
+                     <p></p>
+                     <textarea style="width: 80%; height:100%;" id="greeting" oninput="updateMap()">Copy GeoJson...</textarea>
+                  </div>
+                  <div>
+                     <p></p>
+                     <input style="margin-top:10%" type="file" id="file_input">
+                  </div>
+                  <div id="progBar" style="background-color:black;width:1px;"> </div>
+                  <div>
+                     <span class="label" style="margin-top:3%">Group Name: </span>
+                     <p></p>
+                     <input id="count" />
+                  </div>
+                  <img id="img-spinner" src="ajax-loader.gif" style="display:none;" />
+                  <div><input id="multiplyGreetings" style="margin-top:3%" type="submit" class="btn btn-small" value="Submit"></div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </body>
 </html>

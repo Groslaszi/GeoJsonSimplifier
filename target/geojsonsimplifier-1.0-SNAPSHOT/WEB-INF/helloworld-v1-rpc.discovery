@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/N0L13AWXpnQges04Y6hRlu8L4tI\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/Ur9il2ZkV3JicZuE1gwAef1b2oo\"",
  "discoveryVersion": "v1",
  "id": "helloworld:v1",
  "name": "helloworld",
@@ -269,6 +269,29 @@
    },
    "parameterOrder": [
     "account"
+   ],
+   "returns": {
+    "$ref": "HelloGreeting"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "helloworld.greetings.takeoutdataset": {
+   "id": "helloworld.greetings.takeoutdataset",
+   "parameters": {
+    "group": {
+     "type": "string",
+     "required": true
+    },
+    "username": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "username",
+    "group"
    ],
    "returns": {
     "$ref": "HelloGreeting"

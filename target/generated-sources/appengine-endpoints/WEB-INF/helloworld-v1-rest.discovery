@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/N0L13AWXpnQges04Y6hRlu8L4tI\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/Ur9il2ZkV3JicZuE1gwAef1b2oo\"",
  "discoveryVersion": "v1",
  "id": "helloworld:v1",
  "name": "helloworld",
@@ -329,6 +329,33 @@
      },
      "parameterOrder": [
       "account"
+     ],
+     "response": {
+      "$ref": "HelloGreeting"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "takeoutdataset": {
+     "id": "helloworld.greetings.takeoutdataset",
+     "path": "takeoutdataset/{username}/{group}",
+     "httpMethod": "POST",
+     "parameters": {
+      "group": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      },
+      "username": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "username",
+      "group"
      ],
      "response": {
       "$ref": "HelloGreeting"

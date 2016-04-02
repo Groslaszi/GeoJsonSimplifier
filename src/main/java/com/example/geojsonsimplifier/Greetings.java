@@ -65,6 +65,7 @@ import com.vividsolutions.jts.simplify.DouglasPeuckerSimplifier;
 import com.vividsolutions.jts.simplify.TopologyPreservingSimplifier;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import java.lang.Thread;
+import javax.jdo.*;
 
 /**
  * Defines v1 of a helloworld API, which provides simple "greeting" methods.
@@ -118,7 +119,7 @@ public class Greetings {
    }
   } catch (Exception e) {
    response.setMessage(e + " Error");
-   throw new NotFoundException("Greeting not found with an index: ");
+   //throw new NotFoundException("Greeting not found with an index: ");
   }
 
   if (datasetNames.size() > 0) {
@@ -128,7 +129,27 @@ public class Greetings {
  }
 
 
+public HelloGreeting takeoutdataset (@Named("username") String username,@Named("group") String group){
+HelloGreeting response = new HelloGreeting();
+  response.setMessage("well deleted");
+  try{
+  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+   Key featureKey = KeyFactory.createKey("GeoJsonText", username);
+   Filter propertyFilter = new FilterPredicate("grouptag",
+    FilterOperator.EQUAL,
+    group);
 
+ Query query = new Query("GeoJsonText", featureKey).setFilter(propertyFilter);
+PreparedQuery pq = datastore.prepare(query);
+for (Entity result: pq.asIterable()) {
+datastore.delete( result.getKey());
+}
+
+}catch(Exception e){
+   response.setMessage("Error "+e);
+}
+return response;
+}
 
 
 
@@ -194,7 +215,7 @@ public class Greetings {
    response.setMessage(newGeojson);
   } catch (Exception e) {
    response.setMessage(e + " Error");
-   throw new NotFoundException("Greeting not found with an index: ");
+   //throw new NotFoundException("Greeting not found with an index: ");
   }
 
   return response;

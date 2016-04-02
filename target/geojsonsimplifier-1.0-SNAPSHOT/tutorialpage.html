@@ -1,52 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" /> 
-    <title>GeoJsonSimplifier</title>
-
-    <script type="text/javascript" src="/js/base.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-    <meta name="google-signin-client_id" content="953688397017-0g48nvidk9cp82lalumhbigorpacq7ke.apps.googleusercontent.com">
-    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
-    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
-    <link type="text/css" rel="stylesheet" href="/css/style.css">
-</head>
-<body style="min-height: 100%;">
-    <div class="navbar navbar-inverse navbar-fixed-top"style=" padding-bottom: 20px;">
-        <div class="navbar-inner">
+   <head>
+      <meta charset="utf-8" />
+      <title>GeoJsonSimplifier</title>
+      <script type="text/javascript" src="/js/base.js"></script>
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+      <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+      <meta name="google-signin-client_id" content="953688397017-0g48nvidk9cp82lalumhbigorpacq7ke.apps.googleusercontent.com">
+      <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+      <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
+      <link type="text/css" rel="stylesheet" href="/css/style.css">
+   </head>
+   <body style="min-height: 100%;">
+      <div class="navbar navbar-inverse navbar-fixed-top"style=" padding-bottom: 20px;">
+         <div class="navbar-inner">
             <div class="container">
-                
-                <h3 style="color:white;">Tutorial Page</h3>
+               <h3 style="color:white;">Tutorial Page</h3>
             </div>
-        </div>
-    </div>
-
-
-
-    <div class="container" style="height: 100%; padding-top: 20px;"  >
-
-        <div style="width:100%; height: 100%;">
-
- <div id= "textExplanations" >
-  <h3 >Your data set has been safely uploaded!</h3>
-<p>The following HTTP Get request allows you to retrieve your data in a simplified format:</p>
-<p id ="urltocall"></p>
-
-<script type="text/javascript">
-//document.getElementById("userNameWelcome").innerHTML ="https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/"+sessionStorage.datauploadedname+"/2/"+ sessionStorage.userinfo;
-</script>
-
-</div> ​
-
-
-
-<div id= "suscribeForm" >
-
-        </div> ​
-
- </div> ​
-</div>
-
-</body>
+         </div>
+      </div>
+      <div class="container" style="height: 100%; padding-top: 20px;"  >
+         <div style="width:100%; height: 100%;">
+            <div id= "textExplanations" >
+               <h3 >Your data set has been safely uploaded!</h3>
+               <p>The following HTTP GET request allows you to retrieve your data in a simplified format:</p>
+               <p id ="urltocall"></p>
+               <script type="text/javascript">
+                  document.getElementById("urltocall").innerHTML ="https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/"+sessionStorage.datauploadedname+"/MAP_ZOOM_LEVEL/"+ sessionStorage.userinfo;
+               </script>
+               <p></p>
+               <p></p>
+               The following piece of HTML code is an example of a simple application that contains a map that embeds GeoJsonSimplifer's services. 
+            </div>
+            <div id= "suscribeForm" >
+            </div>
+         </div>
+      </div>
+   </body>
 </html>
