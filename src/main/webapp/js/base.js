@@ -176,7 +176,7 @@ if(this.id!="createNewDataSet"){
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var geojsonresponse = JSON.parse(xmlhttp.responseText);
-            features = map.data.addGeoJson(geojsonresponse);
+            features = map.data.addGeoJson(geojsonresponse.message);
         }
     };
 
