@@ -66,22 +66,22 @@ google.devrel.samples.hello.userAuthed = function() {
 
 
 /**
- * Prints a greeting to the greeting log.
- * param {Object} greeting Greeting to print.
+ * Prints a dataset to the dataset log.
+ * param {Object} dataset Dataset to print.
  */
-google.devrel.samples.hello.print = function(greeting) {
+google.devrel.samples.hello.print = function(dataset) {
   var element = document.createElement('div');
   element.classList.add('row');
-  element.innerHTML = greeting.message;
+  element.innerHTML = dataset.message;
   document.getElementById('outputLog').appendChild(element);
 };
 
 /**
- * Gets a numbered greeting via the API.
- * @param {string} id ID of the greeting.
+ * Gets a numbered dataset via the API.
+ * @param {string} id ID of the dataset.
  */
-google.devrel.samples.hello.getGreeting = function(id,zoominput) {
-  gapi.client.helloworld.greetings.getGreeting({'group': id,'zoom': zoominput}).execute(
+google.devrel.samples.hello.getDataset = function(id,zoominput) {
+  gapi.client.helloworld.datasets.getDataset({'group': id,'zoom': zoominput}).execute(
       function(resp) {
         if (!resp.code) {
           var datatoload=resp.message;
@@ -94,7 +94,7 @@ map.data.addGeoJson(datatoload);
       });
 };
 /**
- * Lists greetings via the API.
+ * Lists datasets via the API.
  */
 
 function onSignIn(googleUser) {
@@ -106,7 +106,7 @@ function onSignIn(googleUser) {
   console.log('Image URL: ' + profile.getImageUrl());
   console.log('Email: ' + profile.getEmail());
 
-  gapi.client.helloworld.greetings.savesignin({
+  gapi.client.helloworld.datasets.savesignin({
       'account': profile.getEmail()
     }).execute(function(resp) {
       if (!resp.code) {
@@ -123,14 +123,14 @@ function onSignIn(googleUser) {
 
 
 /**
- * Gets a greeting a specified number of times.
- * @param {string} greeting Greeting to repeat.
+ * Gets a dataset a specified number of times.
+ * @param {string} dataset Dataset to repeat.
  * @param {string} count Number of times to repeat it.
  */
-google.devrel.samples.hello.multiplyGreeting = function(
-    greeting, times) {
-  gapi.client.helloworld.greetings.multiply({
-      'message': greeting,
+google.devrel.samples.hello.multiplyDataset = function(
+    dataset, times) {
+  gapi.client.helloworld.datasets.multiply({
+      'message': dataset,
       'times': times
     }).execute(function(resp) {
       if (!resp.code) {
@@ -154,15 +154,15 @@ google.devrel.samples.hello.submitSubscruptions = function(
  */
 google.devrel.samples.hello.enableButtons = function() {
 
-  document.getElementById('getGreeting').onclick = function() {
-    google.devrel.samples.hello.getGreeting(
+  document.getElementById('getDataset').onclick = function() {
+    google.devrel.samples.hello.getDataset(
         document.getElementById('id').value,document.getElementById('zoominput').value);
   }
 
 
-  document.getElementById('multiplyGreetings').onclick = function() {
-          google.devrel.samples.hello.multiplyGreeting(
-        document.getElementById('greeting').value,
+  document.getElementById('multiplyDatasets').onclick = function() {
+          google.devrel.samples.hello.multiplyDataset(
+        document.getElementById('dataset').value,
         document.getElementById('count').value);
   }
 

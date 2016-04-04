@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/ztjuIz49JsgFZxAaCzVaacN-aMU\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/h-AaxZlOBuUWIf-Dqx9v-f5ws4I\"",
  "discoveryVersion": "v1",
  "id": "helloworld:v1",
  "name": "helloworld",
@@ -71,8 +71,8 @@
   }
  },
  "schemas": {
-  "HelloGreeting": {
-   "id": "HelloGreeting",
+  "ResponseBean": {
+   "id": "ResponseBean",
    "type": "object",
    "properties": {
     "message": {
@@ -86,22 +86,11 @@
   }
  },
  "resources": {
-  "greetings": {
+  "dataset": {
    "methods": {
-    "authed": {
-     "id": "helloworld.greetings.authed",
-     "path": "hellogreeting/authed",
-     "httpMethod": "POST",
-     "response": {
-      "$ref": "HelloGreeting"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/userinfo.email"
-     ]
-    },
-    "getGreeting": {
-     "id": "helloworld.greetings.getGreeting",
-     "path": "hellogreeting/{group}/{zoom}/{username}/{size}",
+    "getDataset": {
+     "id": "helloworld.dataset.getDataset",
+     "path": "responsebean/{group}/{zoom}/{username}/{size}",
      "httpMethod": "GET",
      "parameters": {
       "group": {
@@ -134,14 +123,14 @@
       "size"
      ],
      "response": {
-      "$ref": "HelloGreeting"
+      "$ref": "ResponseBean"
      },
      "scopes": [
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
     "listDataSets": {
-     "id": "helloworld.greetings.listDataSets",
+     "id": "helloworld.dataset.listDataSets",
      "path": "listDataSets/{username}",
      "httpMethod": "GET",
      "parameters": {
@@ -155,45 +144,14 @@
       "username"
      ],
      "response": {
-      "$ref": "HelloGreeting"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/userinfo.email"
-     ]
-    },
-    "multiply": {
-     "id": "helloworld.greetings.multiply",
-     "path": "hellogreeting/{times}/{username}",
-     "httpMethod": "POST",
-     "parameters": {
-      "times": {
-       "type": "string",
-       "required": true,
-       "location": "path"
-      },
-      "username": {
-       "type": "string",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "times",
-      "username"
-     ],
-     "request": {
-      "$ref": "HelloGreeting",
-      "parameterName": "resource"
-     },
-     "response": {
-      "$ref": "HelloGreeting"
+      "$ref": "ResponseBean"
      },
      "scopes": [
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
     "takeoutdataset": {
-     "id": "helloworld.greetings.takeoutdataset",
+     "id": "helloworld.dataset.takeoutdataset",
      "path": "takeoutdataset/{username}/{group}",
      "httpMethod": "POST",
      "parameters": {
@@ -213,7 +171,53 @@
       "group"
      ],
      "response": {
-      "$ref": "HelloGreeting"
+      "$ref": "ResponseBean"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  },
+  "datasets": {
+   "methods": {
+    "authed": {
+     "id": "helloworld.datasets.authed",
+     "path": "ResponseBean/authed",
+     "httpMethod": "POST",
+     "response": {
+      "$ref": "ResponseBean"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "multiply": {
+     "id": "helloworld.datasets.multiply",
+     "path": "responsebean/{times}/{username}",
+     "httpMethod": "POST",
+     "parameters": {
+      "times": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      },
+      "username": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "times",
+      "username"
+     ],
+     "request": {
+      "$ref": "ResponseBean",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "ResponseBean"
      },
      "scopes": [
       "https://www.googleapis.com/auth/userinfo.email"

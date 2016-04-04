@@ -61,7 +61,7 @@ document.getElementById("userNameWelcome").innerHTML = "Here are your datasets "
 
      //the GET request that will be executed
      var xmlhttp = new XMLHttpRequest();
-     var url =  'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+clickedDataset+'/'+map.getZoom()+'/'+sessionStorage.userinfo+'/'+window.innerWidth;
+     var url =  'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/responsebean/'+clickedDataset+'/'+map.getZoom()+'/'+sessionStorage.userinfo+'/'+window.innerWidth;
      
      xmlhttp.onreadystatechange = function() {
        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {

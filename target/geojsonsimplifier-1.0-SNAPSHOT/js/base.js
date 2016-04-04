@@ -43,10 +43,10 @@
 var features=null;
 
 //the method fetches the appropriate level of abstraction for a GeoJSON object of a given dataset
-google.devrel.samples.hello.getGreeting = function(id, zoominput, username) {
+google.devrel.samples.hello.getdataset = function(id, zoominput, username) {
 
 //the API method and it's parameters
-gapi.client.helloworld.greetings.getGreeting({
+gapi.client.helloworld.datasets.getdataset({
     'group': id,
     'zoom': zoominput,
     'username': username,
@@ -64,16 +64,16 @@ map.data.addGeoJson(datatoload);
 };
 
 //the method inserts a given GeoJson Object to the backend
-google.devrel.samples.hello.multiplyGreeting = function(
-    greeting, times, username) {
+google.devrel.samples.hello.multiplydataset = function(
+    dataset, times, username) {
 
     //the loading animations gets activated and the submit button disapears 
-    document.getElementById("multiplyGreetings").style.display = "none";
+    document.getElementById("insertdatasets").style.display = "none";
     document.getElementById("img-spinner").style.display = "block";
 
     //the insert method API is called
-    gapi.client.helloworld.greetings.multiply({
-        'message': greeting,
+    gapi.client.helloworld.datasets.multiply({
+        'message': dataset,
         'times': times,
         'username': username
 
@@ -164,7 +164,7 @@ if(features!=null){
 if(this.id!="createNewDataSet"){
 
     //displays the URL that the user has to insert in his personal application to retriev the selected dataset
-    document.getElementById("urldataset").innerHTML = 'The corresponding URL is: https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/INSERT_ZOOM_LEVEL'+'/'+sessionStorage.userinfo+'/INSERT_WINDOW_WIDTH';
+    document.getElementById("urldataset").innerHTML = 'The corresponding URL is: https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/responsebean/'+this.id+'/INSERT_ZOOM_LEVEL'+'/'+sessionStorage.userinfo+'/INSERT_WINDOW_WIDTH';
     //upadtes the element currently selected
     clickedDataset=this.id;
     var xmlhttp = new XMLHttpRequest();
@@ -172,7 +172,7 @@ if(this.id!="createNewDataSet"){
     document.getElementById("deleteButton").style.visibility = "visible";
 
     //the selected dataset is fetched from the backend and displayed on the map
-    var url =  'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/hellogreeting/'+this.id+'/'+map.getZoom()+'/'+sessionStorage.userinfo+'/'+window.innerWidth;
+    var url =  'https://geojsonsimplifier.appspot.com/_ah/api/helloworld/v1/responsebean/'+this.id+'/'+map.getZoom()+'/'+sessionStorage.userinfo+'/'+window.innerWidth;
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var geojsonresponse = JSON.parse(xmlhttp.responseText);
@@ -213,7 +213,7 @@ function signOut() {
 
 //the map in use is updated with the latest data that has arrived
 function updateMap() {
-    var mapdataupdate = JSON.parse(document.getElementById('greeting').value);
+    var mapdataupdate = JSON.parse(document.getElementById('dataset').value);
     map.data.addGeoJson(mapdataupdate);
 }
 
@@ -222,14 +222,14 @@ function updateMap() {
 google.devrel.samples.hello.enableButtons = function() {
 
 //the method that is called once a user has uplaoded and submitted his dataset
-    document.getElementById('multiplyGreetings').onclick = function() {
+    document.getElementById('insertdatasets').onclick = function() {
 
 //the GeoJSON to be uplaoded either comes from a local file or has been pasted in the textarea
         if(geojsontoUpload==null){
-          geojsontoUpload=document.getElementById('greeting').value;
+          geojsontoUpload=document.getElementById('dataset').value;
       }
 
-      google.devrel.samples.hello.multiplyGreeting(
+      google.devrel.samples.hello.multiplydataset(
         geojsontoUpload,
         document.getElementById('count').value, sessionStorage.userinfo);
 //the name of the dataset that has just been uplaoded is saved in the local sessionStorage 

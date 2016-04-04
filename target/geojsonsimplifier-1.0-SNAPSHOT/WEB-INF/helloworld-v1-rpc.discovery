@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/ztjuIz49JsgFZxAaCzVaacN-aMU\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/h-AaxZlOBuUWIf-Dqx9v-f5ws4I\"",
  "discoveryVersion": "v1",
  "id": "helloworld:v1",
  "name": "helloworld",
@@ -69,8 +69,8 @@
   }
  },
  "schemas": {
-  "HelloGreeting": {
-   "id": "HelloGreeting",
+  "ResponseBean": {
+   "id": "ResponseBean",
    "type": "object",
    "properties": {
     "message": {
@@ -84,17 +84,8 @@
   }
  },
  "methods": {
-  "helloworld.greetings.authed": {
-   "id": "helloworld.greetings.authed",
-   "returns": {
-    "$ref": "HelloGreeting"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
-  "helloworld.greetings.getGreeting": {
-   "id": "helloworld.greetings.getGreeting",
+  "helloworld.dataset.getDataset": {
+   "id": "helloworld.dataset.getDataset",
    "allowGet": true,
    "parameters": {
     "group": {
@@ -123,14 +114,14 @@
     "size"
    ],
    "returns": {
-    "$ref": "HelloGreeting"
+    "$ref": "ResponseBean"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
    ]
   },
-  "helloworld.greetings.listDataSets": {
-   "id": "helloworld.greetings.listDataSets",
+  "helloworld.dataset.listDataSets": {
+   "id": "helloworld.dataset.listDataSets",
    "allowGet": true,
    "parameters": {
     "username": {
@@ -142,17 +133,49 @@
     "username"
    ],
    "returns": {
-    "$ref": "HelloGreeting"
+    "$ref": "ResponseBean"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
    ]
   },
-  "helloworld.greetings.multiply": {
-   "id": "helloworld.greetings.multiply",
+  "helloworld.dataset.takeoutdataset": {
+   "id": "helloworld.dataset.takeoutdataset",
+   "parameters": {
+    "group": {
+     "type": "string",
+     "required": true
+    },
+    "username": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "username",
+    "group"
+   ],
+   "returns": {
+    "$ref": "ResponseBean"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "helloworld.datasets.authed": {
+   "id": "helloworld.datasets.authed",
+   "returns": {
+    "$ref": "ResponseBean"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "helloworld.datasets.multiply": {
+   "id": "helloworld.datasets.multiply",
    "parameters": {
     "resource": {
-     "$ref": "HelloGreeting"
+     "$ref": "ResponseBean"
     },
     "times": {
      "type": "string",
@@ -169,30 +192,7 @@
     "username"
    ],
    "returns": {
-    "$ref": "HelloGreeting"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
-  "helloworld.greetings.takeoutdataset": {
-   "id": "helloworld.greetings.takeoutdataset",
-   "parameters": {
-    "group": {
-     "type": "string",
-     "required": true
-    },
-    "username": {
-     "type": "string",
-     "required": true
-    }
-   },
-   "parameterOrder": [
-    "username",
-    "group"
-   ],
-   "returns": {
-    "$ref": "HelloGreeting"
+    "$ref": "ResponseBean"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
