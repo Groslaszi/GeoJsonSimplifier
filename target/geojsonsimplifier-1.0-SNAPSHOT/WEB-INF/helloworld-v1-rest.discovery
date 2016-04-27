@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/h-AaxZlOBuUWIf-Dqx9v-f5ws4I\"",
+ "etag": "\"H01Z-1ikbwOw463Un2bFZHenx1g/YGVCSfMvaA3XwJ1cCGUa86eHwqo\"",
  "discoveryVersion": "v1",
  "id": "helloworld:v1",
  "name": "helloworld",
@@ -86,10 +86,56 @@
   }
  },
  "resources": {
-  "dataset": {
+  "datasets": {
+   "methods": {
+    "authed": {
+     "id": "helloworld.datasets.authed",
+     "path": "ResponseBean/authed",
+     "httpMethod": "POST",
+     "response": {
+      "$ref": "ResponseBean"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "multiply": {
+     "id": "helloworld.datasets.multiply",
+     "path": "responsebean/{times}/{username}",
+     "httpMethod": "POST",
+     "parameters": {
+      "times": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      },
+      "username": {
+       "type": "string",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "times",
+      "username"
+     ],
+     "request": {
+      "$ref": "ResponseBean",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "ResponseBean"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  },
+  "geoJsonSimplifierAPI": {
    "methods": {
     "getDataset": {
-     "id": "helloworld.dataset.getDataset",
+     "id": "helloworld.geoJsonSimplifierAPI.getDataset",
      "path": "responsebean/{group}/{zoom}/{username}/{size}",
      "httpMethod": "GET",
      "parameters": {
@@ -130,7 +176,7 @@
      ]
     },
     "listDataSets": {
-     "id": "helloworld.dataset.listDataSets",
+     "id": "helloworld.geoJsonSimplifierAPI.listDataSets",
      "path": "listDataSets/{username}",
      "httpMethod": "GET",
      "parameters": {
@@ -151,7 +197,7 @@
      ]
     },
     "takeoutdataset": {
-     "id": "helloworld.dataset.takeoutdataset",
+     "id": "helloworld.geoJsonSimplifierAPI.takeoutdataset",
      "path": "takeoutdataset/{username}/{group}",
      "httpMethod": "POST",
      "parameters": {
@@ -170,52 +216,6 @@
       "username",
       "group"
      ],
-     "response": {
-      "$ref": "ResponseBean"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/userinfo.email"
-     ]
-    }
-   }
-  },
-  "datasets": {
-   "methods": {
-    "authed": {
-     "id": "helloworld.datasets.authed",
-     "path": "ResponseBean/authed",
-     "httpMethod": "POST",
-     "response": {
-      "$ref": "ResponseBean"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/userinfo.email"
-     ]
-    },
-    "multiply": {
-     "id": "helloworld.datasets.multiply",
-     "path": "responsebean/{times}/{username}",
-     "httpMethod": "POST",
-     "parameters": {
-      "times": {
-       "type": "string",
-       "required": true,
-       "location": "path"
-      },
-      "username": {
-       "type": "string",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "times",
-      "username"
-     ],
-     "request": {
-      "$ref": "ResponseBean",
-      "parameterName": "resource"
-     },
      "response": {
       "$ref": "ResponseBean"
      },

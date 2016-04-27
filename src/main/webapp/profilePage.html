@@ -27,14 +27,14 @@
       <p id="urldataset"></p>
   </div>
   <div style="float:right; height: 100%;">
-      <img id ="deleteButton" onclick="sendDeleteRequest()" src="deleteImage.png" style="height:50%; width:auto;">
+      <img id ="deleteButton" onclick="sendDeleteRequest()" src="/graphical_resources/deleteImage.png" style="height:50%; width:auto;">
   </div>
 </div>
 <div id= "mapvisualisation" >
  <div id="map" style="height:100%;"></div>
 </div>
 <div id= "dataForms" >
- <img id="img-spinner" src="ajax-loader.gif" />
+ <img id="img-spinner" src="/graphical_resources/ajax-loader.gif" />
  <div id="datalist" class="list-group"></div>
 </div>
 </div>
@@ -108,8 +108,12 @@ if(window.confirm('This will permantly delete your data. Do you want to continue
                     document.getElementById("createNewDataSet").disabled = false;
                     window.alert('The dataset has been deleted');
                     document.getElementById("createNewDataSet").disabled = false;
-                    var myArr = JSON.parse(xmlhttp.responseText);
-                    dataDisplayonMap(myArr);
+                    document.getElementById("deleteButton").style.visibility = "hidden";
+                     document.getElementById("urldataset").innerHTML = '';
+                      if(features!=null){
+         for (var i = 0; i < features.length; i++)
+             map.data.remove(features[i]);
+     }
                 }
             };
 
